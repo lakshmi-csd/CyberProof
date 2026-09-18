@@ -21,7 +21,7 @@ if (signupForm) {
         }
 
         try {
-            const response = await fetch(`${API_URL}/api/signup`, {
+            const signupResponse = await fetch(`${API_URL}/api/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -32,20 +32,47 @@ if (signupForm) {
                 })
             });
 
-            const data = await response.json();
+            const signupData = await signupResponse.json();
 
-            if (!response.ok) {
-                showMessage(data.error || "Signup failed.");
+            if (!signupResponse.ok) {
+                showMessage(signupData.error || "Signup failed.");
                 return;
             }
 
-            showMessage("Account created successfully! Redirecting to login...");
+            showMessage("Account created! Signing you in...");
+
+            const loginResponse = await fetch(`${API_URL}/api/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
+
+            const loginData = await loginResponse.json();
+
+            if (!loginResponse.ok) {
+                showMessage("Account created. Please sign in once.");
+                return;
+            }
+
+            if (loginData.token) {
+                localStorage.setItem("cyberproofToken", loginData.token);
+            }
+
+            if (loginData.user) {
+                localStorage.setItem(
+                    "cyberproofUser",
+                    JSON.stringify(loginData.user)
+                );
+            }
 
             signupForm.reset();
 
-            setTimeout(function () {
-                window.location.href = "login.html";
-            }, 1200);
+            window.location.href = "scanner.html";
 
         } catch (error) {
             console.error("Signup error:", error);
