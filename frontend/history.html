@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CyberProof — History</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="container nav-inner">
+
+        <a href="index.html" class="logo">
+            CyberProof
+        </a>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="scanner.html">Scanner</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="incident.html">Incident Check</a>
+            <a href="history.html" class="active">
+              History
+                 </a>
+            <a href="threats.html">Threat Pulse</a>
+            <a href="learn.html">Learn</a>
+            <a href="login.html" class="nav-button">Sign in</a>
+        </div>
+
+    </div>
+</nav>
+
+<main>
+
+    <section class="page-header">
+        <div class="container">
+
+            <h1>Scan History</h1>
+
+            <p>
+                Review your previous CyberProof trust analyses
+                and the actions recommended for each scan.
+            </p>
+
+        </div>
+    </section>
+
+    <section class="section">
+
+        <div class="container">
+
+            <div
+                id="emptyState"
+                class="content-card"
+                style="display:none;">
+
+                <h2>No scans yet</h2>
+
+                <p style="margin-top:10px; color:#666666;">
+                    Your completed trust analyses will appear here.
+                </p>
+
+                <a
+                    href="scanner.html"
+                    class="primary-button"
+                    style="margin-top:20px;">
+                    Start a scan →
+                </a>
+
+            </div>
+
+            <div id="historyList"></div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer class="footer">
+
+    <div class="container footer-inner">
+
+        <strong>CyberProof</strong>
+
+        <p>
+            Digital Trust Engine · Explainable security analysis
+        </p>
+
+    </div>
+
+</footer>
+
+<script>
+const API_URL = "http://localhost:5000/api/history";
+
+async function loadHistory() {
+
+    const historyList =
+        document.getElementById("historyList");
+
+    const emptyState =
+        document.getElementById("emptyState");
+
+    const token =
+        localStorage.getItem("cyberproofToken");
+
+    if (!token) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    try {
+
+        const response = await fetch(API_URL, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        });
+
+        const data = await response.json();
+
+        if (response.status === 401) {
+
+            localStorage.removeItem("cyberproofToken");
+            localStorage.removeItem("cyberproofUser");
+
+            window.location.href = "login.html";
+            return;
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || "Could not load history."
+            );
+        }
+
+        historyList.innerHTML = "";
+
+        if (!Array.isArray(data) || data.length === 0) {
+
+            emptyState.style.display = "block";
+            return;
+        }
+
+        emptyState.style.display = "none";
+
+        data.forEach(function(scan) {
+
+            const card =
+                document.createElement("div");
+
+            card.className = "content-card";
+
+            const type =
+                document.createElement("strong");
+
+            type.textContent =
+                String(
+                    scan.type || "SCAN"
+                ).toUpperCase();
+
+            const date =
+                document.createElement("p");
+
+            date.style.color = "#666666";
+            date.style.fontSize = "13px";
+            date.style.marginTop = "8px";
+
+            date.textContent =
+                scan.createdAt
+                    ? new Date(
+                        scan.createdAt
+                    ).toLocaleString()
+                    : "Unknown date";
+
+            const inputTitle =
+                document.createElement("small");
+
+            inputTitle.textContent =
+                "CHECKED INPUT";
+
+            inputTitle.style.display = "block";
+            inputTitle.style.marginTop = "18px";
+            inputTitle.style.color = "#666666";
+            inputTitle.style.fontWeight = "900";
+            inputTitle.style.letterSpacing = "1px";
+
+            const input =
+                document.createElement("p");
+
+            input.textContent =
+                scan.input || "No input";
+
+            input.style.marginTop = "8px";
+            input.style.wordBreak = "break-word";
+
+            const status =
+                document.createElement("span");
+
+            status.className = "trust-pill";
+
+            status.textContent =
+                scan.status || "VERIFY FIRST";
+
+            status.style.display = "inline-block";
+            status.style.marginTop = "18px";
+
+            const action =
+                document.createElement("p");
+
+            action.textContent =
+                scan.action || "Verify first";
+
+            action.style.marginTop = "12px";
+            action.style.fontWeight = "700";
+
+            card.appendChild(type);
+            card.appendChild(date);
+            card.appendChild(inputTitle);
+            card.appendChild(input);
+            card.appendChild(status);
+            card.appendChild(action);
+
+            historyList.appendChild(card);
+        });
+
+    } catch (error) {
+
+        console.error(
+            "History error:",
+            error
+        );
+
+        historyList.innerHTML =
+            "<div class='content-card'>" +
+            "<h2>Could not load history</h2>" +
+            "<p style='margin-top:10px;color:#666666;'>" +
+            error.message +
+            "</p>" +
+            "</div>";
+    }
+}
+
+loadHistory();
+</script>
+
+</body>
+</html>

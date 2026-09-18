@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CyberProof — Scan & Analyze</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script
+        src="https://unpkg.com/html5-qrcode"
+        type="text/javascript">
+    </script>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="container nav-inner">
+
+        <a href="index.html" class="logo">
+            CyberProof
+        </a>
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="scanner.html" class="active">
+            Scanner
+             </a>
+                
+        
+           <a href="dashboard.html">Dashboard</a>
+            <a href="incident.html">Incident Check</a>
+            <a href="history.html">
+                History
+            </a>
+
+            <a href="threats.html">
+                Threat Pulse
+            </a>
+
+            <a href="learn.html">
+                Learn
+            </a>
+
+            <a href="login.html" class="nav-button">
+                Sign in
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="scanner-page">
+
+    <div class="container">
+
+        <!-- HEADER -->
+
+        <div class="scanner-heading">
+
+            <span class="trust-pill">
+                DIGITAL TRUST ENGINE
+            </span>
+
+            <h1 style="margin-top:18px;">
+                Scan & Analyze
+            </h1>
+
+            <p>
+                Analyze websites, QR codes, emails, messages and
+                OTP requests before you interact with them.
+            </p>
+
+        </div>
+
+
+        <!-- MAIN SCANNER TABS -->
+
+        <div class="scanner-tabs">
+
+            <button
+                type="button"
+                class="scanner-tab active"
+                data-type="url">
+
+                Website
+
+            </button>
+
+
+            <button
+                type="button"
+                class="scanner-tab"
+                data-type="qr">
+
+                QR Code
+
+            </button>
+
+
+            <button
+                type="button"
+                class="scanner-tab"
+                data-type="email">
+
+                Email
+
+            </button>
+
+
+            <button
+                type="button"
+                class="scanner-tab"
+                data-type="message">
+
+                Message / SMS
+
+            </button>
+
+
+            <button
+                type="button"
+                class="scanner-tab"
+                data-type="otp">
+
+                OTP Request
+
+            </button>
+
+        </div>
+
+
+        <!-- SCANNER -->
+
+        <div class="scanner-box">
+
+            <div class="scanner-label">
+
+                <span id="inputHint">
+                    PASTE A URL
+                </span>
+
+            </div>
+
+
+            <h2 id="scannerTitle">
+                Check a website
+            </h2>
+
+
+            <p id="scannerDescription">
+
+                Analyze a website address for suspicious patterns,
+                security signals and potential risk.
+
+            </p>
+
+
+            <!-- TEXT INPUT -->
+
+            <textarea
+                id="scannerInput"
+                placeholder="Paste a website URL here..."
+                autocomplete="off"></textarea>
+
+
+            <!-- QR AREA -->
+
+            <div
+                id="qrUploadArea"
+                class="qr-area"
+                style="display:none;">
+
+                <div class="qr-methods">
+
+                    <button
+                        type="button"
+                        class="qr-method-button"
+                        id="qrCameraBtn">
+
+                        📷 Scan with Camera
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="qr-method-button"
+                        id="qrUploadBtn">
+
+                        📁 Upload QR Image
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="qr-method-button"
+                        id="qrPasteBtn">
+
+                        🔗 Paste Destination URL
+
+                    </button>
+
+                </div>
+
+
+                <!-- CAMERA -->
+
+                <div id="qrCameraBox">
+
+                    <div id="qr-reader"></div>
+
+                </div>
+
+
+                <!-- UPLOAD -->
+
+                <div id="qrUploadBox">
+
+                    <label
+                        for="qrFile"
+                        class="qr-upload-label">
+
+                        Select QR image
+
+                    </label>
+
+
+                    <input
+                        type="file"
+                        id="qrFile"
+                        accept="image/*">
+
+                </div>
+
+
+                <!-- PASTE -->
+
+                <div id="qrUrlBox">
+
+                    <input
+                        type="url"
+                        id="qrUrlInput"
+                        placeholder="Paste the QR destination URL">
+
+                </div>
+
+
+                <!-- EXPECTED DESTINATION -->
+
+                <div style="margin-top:20px;">
+
+                    <label
+                        for="expectedDestination"
+                        style="
+                            display:block;
+                            font-weight:800;
+                            margin-bottom:8px;
+                        ">
+
+                        Expected destination
+
+                    </label>
+
+
+                    <input
+                        type="url"
+                        id="expectedDestination"
+                        placeholder="Example: https://college.edu/pay"
+                        style="
+                            width:100%;
+                            padding:17px;
+                            border:1px solid #dedbd2;
+                            border-radius:15px;
+                            outline:none;
+                        ">
+
+
+                    <p
+                        style="
+                            margin-top:8px;
+                            color:#687386;
+                            font-size:14px;
+                        ">
+
+                        Optional: enter where you expect
+                        this QR code to lead.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTEXT -->
+
+            <div class="context-question">
+
+                <p>
+                    Did you expect this?
+                </p>
+
+
+                <div class="context-options">
+
+                    <button
+                        type="button"
+                        class="context-option active"
+                        data-context="expected">
+
+                        Yes, I expected it
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="context-option"
+                        data-context="unexpected">
+
+                        No, I didn't expect it
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="context-option"
+                        data-context="unknown">
+
+                        I'm not sure
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ANALYZE -->
+
+            <button
+                id="scanButton"
+                class="scan-button"
+                type="button">
+
+                Analyze →
+
+            </button>
+
+        </div>
+
+
+        <!-- RESULT -->
+
+        <section
+            id="scannerResult"
+            class="scanner-result hidden">
+
+
+            <div class="result-header">
+
+                <span>
+                    ANALYSIS RESULT
+                </span>
+
+
+                <h2>
+                    Analysis complete
+                </h2>
+
+
+                <strong id="resultStatus">
+                    LOW CONCERN
+                </strong>
+
+            </div>
+
+
+            <!-- INPUT -->
+
+            <div class="checked-input">
+
+                <small>
+                    CHECKED INPUT
+                </small>
+
+
+                <p id="checkedInput">
+                    —
+                </p>
+
+            </div>
+
+
+            <!-- EVIDENCE -->
+
+            <div class="evidence-grid">
+
+                <div class="evidence-item">
+
+                    <span>
+                        01
+                    </span>
+
+
+                    <h3>
+                        Identity
+                    </h3>
+
+
+                    <p id="identityResult">
+                        —
+                    </p>
+
+
+                    <b id="identityIcon">
+                        ✓
+                    </b>
+
+                </div>
+
+
+                <div class="evidence-item">
+
+                    <span>
+                        02
+                    </span>
+
+
+                    <h3>
+                        Security
+                    </h3>
+
+
+                    <p id="securityResult">
+                        —
+                    </p>
+
+
+                    <b id="securityIcon">
+                        ✓
+                    </b>
+
+                </div>
+
+
+                <div class="evidence-item">
+
+                    <span>
+                        03
+                    </span>
+
+
+                    <h3>
+                        Intent
+                    </h3>
+
+
+                    <p id="intentResult">
+                        —
+                    </p>
+
+
+                    <b id="intentIcon">
+                        ⚠
+                    </b>
+
+                </div>
+
+
+                <div class="evidence-item">
+
+                    <span>
+                        04
+                    </span>
+
+
+                    <h3>
+                        Context
+                    </h3>
+
+
+                    <p id="contextResult">
+                        —
+                    </p>
+
+
+                    <b id="contextIcon">
+                        🟢
+                    </b>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTION -->
+
+            <div class="recommended-action">
+
+                <small>
+                    RECOMMENDED ACTION
+                </small>
+
+
+                <h3 id="recommendedAction">
+                    —
+                </h3>
+
+
+                <p id="actionDescription">
+                    Review the evidence before interacting.
+                </p>
+
+            </div>
+
+
+            <!-- VIRUSTOTAL -->
+
+            <div
+                class="content-card"
+                style="margin-top:20px;">
+
+                <span class="scanner-label">
+                    THREAT INTELLIGENCE
+                </span>
+
+
+                <h3 style="margin-top:12px;">
+                    VirusTotal Reputation
+                </h3>
+
+
+                <p
+                    id="virusTotalResult"
+                    style="
+                        margin-top:10px;
+                        color:#687386;
+                    ">
+
+                    VirusTotal reputation will appear here.
+
+                </p>
+
+            </div>
+
+
+            <!-- WHY -->
+
+            <div
+                class="content-card"
+                style="margin-top:20px;">
+
+                <span class="scanner-label">
+                    WHY THIS RESULT?
+                </span>
+
+
+                <h3 style="margin-top:12px;">
+                    Evidence-based explanation
+                </h3>
+
+
+                <p
+                    id="explanationResult"
+                    style="
+                        margin-top:10px;
+                        color:#687386;
+                    ">
+
+                    The analysis explanation will appear here.
+
+                </p>
+
+            </div>
+
+
+            <!-- ACTION BUTTONS -->
+
+            <div
+                class="hero-actions"
+                style="margin-top:20px;">
+
+                <button
+                    type="button"
+                    id="scanAgainButton"
+                    class="primary-button">
+
+                    Scan Again →
+
+                </button>
+
+
+                <button
+                    type="button"
+                    id="reportButton"
+                    class="secondary-button">
+
+                    View Detailed Report
+
+                </button>
+
+            </div>
+
+
+            <!-- DETAILED REPORT -->
+
+            <div
+                id="detailedReportBox"
+                class="content-card"
+                style="
+                    margin-top:20px;
+                    display:none;
+                ">
+
+                <span class="scanner-label">
+                    DETAILED REPORT
+                </span>
+
+
+                <h3 style="margin-top:12px;">
+                    Full Analysis Report
+                </h3>
+
+
+                <p
+                    id="detailedReportText"
+                    style="
+                        margin-top:10px;
+                        color:#687386;
+                    ">
+
+                    —
+
+                </p>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="container footer-inner">
+
+        <div>
+
+            <strong>
+                CyberProof
+            </strong>
+
+
+            <p style="margin-top:6px;">
+                Digital Trust Engine · Explainable security analysis
+            </p>
+
+        </div>
+
+
+        <p>
+            Analyze. Verify. Stay Safe.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="script.js"></script>
+<script src="nav-active.js"></script>
+</body>
+</html>

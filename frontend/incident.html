@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CyberProof — Incident Check</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="container nav-inner">
+
+        <a href="index.html" class="logo">
+            CyberProof
+        </a>
+
+        <div class="nav-links">
+
+            <a href="index.html">Home</a>
+
+            <a href="scanner.html">Scanner</a>
+
+            <a href="dashboard.html">Dashboard</a>
+
+            <a href="incident.html" class="active">
+            Incident Check
+            </a>
+
+            <a href="history.html">History</a>
+
+            <a href="threats.html">Threat Pulse</a>
+
+            <a href="learn.html">Learn</a>
+
+            <a href="login.html" class="nav-button">
+                Sign in
+            </a>
+
+        </div>
+
+    </div>
+</nav>
+
+
+<main class="scanner-page">
+
+    <div class="container">
+
+        <div class="scanner-heading">
+
+            <span class="trust-pill">
+                INCIDENT CHECK
+            </span>
+
+            <h1 style="margin-top:18px;">
+                Check a Suspicious Incident
+            </h1>
+
+            <p>
+                Describe a suspicious message, request, payment
+                situation or online incident and analyze its risk signals.
+            </p>
+
+        </div>
+
+
+        <div class="scanner-box">
+
+            <div class="scanner-label">
+                INCIDENT DETAILS
+            </div>
+
+            <h2>
+                What happened?
+            </h2>
+
+            <p>
+                Describe the suspicious event in as much detail
+                as you can.
+            </p>
+
+
+            <textarea
+                id="incidentInput"
+                placeholder="Example: I received a message saying my account would be blocked unless I paid immediately..."
+                autocomplete="off"></textarea>
+
+
+            <div class="context-question">
+
+                <p>
+                    Did you expect this incident?
+                </p>
+
+                <div class="context-options">
+
+                    <button
+                        type="button"
+                        class="context-option active"
+                        data-context="expected">
+                        Yes, I expected it
+                    </button>
+
+                    <button
+                        type="button"
+                        class="context-option"
+                        data-context="unexpected">
+                        No, I didn't expect it
+                    </button>
+
+                    <button
+                        type="button"
+                        class="context-option"
+                        data-context="unknown">
+                        I'm not sure
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="incidentButton"
+                class="scan-button"
+                type="button">
+                Check Incident →
+            </button>
+
+        </div>
+
+
+        <section
+            id="incidentResult"
+            class="scanner-result hidden">
+
+            <div class="result-header">
+
+                <span>
+                    INCIDENT ANALYSIS
+                </span>
+
+                <h2>
+                    Analysis complete
+                </h2>
+
+                <strong id="incidentStatus">
+                    VERIFY FIRST
+                </strong>
+
+            </div>
+
+
+            <div class="checked-input">
+
+                <small>
+                    CHECKED INCIDENT
+                </small>
+
+                <p id="incidentChecked">
+                    —
+                </p>
+
+            </div>
+
+
+            <div class="evidence-grid">
+
+                <div class="evidence-item">
+
+                    <span>01</span>
+
+                    <h3>Identity</h3>
+
+                    <p id="incidentIdentity">—</p>
+
+                    <b id="incidentIdentityIcon">✓</b>
+
+                </div>
+
+
+                <div class="evidence-item">
+
+                    <span>02</span>
+
+                    <h3>Security</h3>
+
+                    <p id="incidentSecurity">—</p>
+
+                    <b id="incidentSecurityIcon">✓</b>
+
+                </div>
+
+
+                <div class="evidence-item">
+
+                    <span>03</span>
+
+                    <h3>Intent</h3>
+
+                    <p id="incidentIntent">—</p>
+
+                    <b id="incidentIntentIcon">⚠</b>
+
+                </div>
+
+
+                <div class="evidence-item">
+
+                    <span>04</span>
+
+                    <h3>Context</h3>
+
+                    <p id="incidentContext">—</p>
+
+                    <b id="incidentContextIcon">🟢</b>
+
+                </div>
+
+            </div>
+
+
+            <div class="recommended-action">
+
+                <small>
+                    RECOMMENDED ACTION
+                </small>
+
+                <h3 id="incidentAction">
+                    —
+                </h3>
+
+                <p id="incidentActionDescription">
+                    Review the evidence before taking further action.
+                </p>
+
+            </div>
+
+
+            <div
+                class="content-card"
+                style="margin-top:20px;">
+
+                <span class="scanner-label">
+                    WHY THIS RESULT?
+                </span>
+
+                <h3 style="margin-top:12px;">
+                    Evidence-based explanation
+                </h3>
+
+                <p
+                    id="incidentExplanation"
+                    style="margin-top:10px; color:#687386;">
+                    —
+                </p>
+
+            </div>
+
+
+            <div
+                class="hero-actions"
+                style="margin-top:20px;">
+
+                <button
+                    type="button"
+                    id="incidentAgain"
+                    class="primary-button">
+                    Check Another Incident →
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="container footer-inner">
+
+        <div>
+
+            <strong>
+                CyberProof
+            </strong>
+
+            <p style="margin-top:6px;">
+                Digital Trust Engine · Explainable security analysis
+            </p>
+
+        </div>
+
+        <p>
+            Analyze. Verify. Stay Safe.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+const API_URL = "http://localhost:5000/api/analyze";
+
+const incidentButton =
+    document.getElementById("incidentButton");
+
+const incidentInput =
+    document.getElementById("incidentInput");
+
+const incidentResult =
+    document.getElementById("incidentResult");
+
+let currentContext = "expected";
+
+
+document.querySelectorAll(".context-option")
+    .forEach(option => {
+
+        option.addEventListener("click", () => {
+
+            currentContext = option.dataset.context;
+
+            document.querySelectorAll(".context-option")
+                .forEach(item => {
+                    item.classList.remove("active");
+                });
+
+            option.classList.add("active");
+
+        });
+
+    });
+
+
+function applyStatus(element, status) {
+
+    element.classList.remove(
+        "status-low",
+        "status-verify",
+        "status-high"
+    );
+
+    if (status === "LOW CONCERN") {
+        element.classList.add("status-low");
+    }
+
+    if (status === "VERIFY FIRST") {
+        element.classList.add("status-verify");
+    }
+
+    if (status === "HIGH CONCERN") {
+        element.classList.add("status-high");
+    }
+}
+
+
+function makeExplanation(data) {
+
+    const evidence = data.evidence || {};
+
+    const identity =
+        evidence.identity?.message || "";
+
+    const security =
+        evidence.security?.message || "";
+
+    const intent =
+        evidence.intent?.message || "";
+
+    const context =
+        evidence.context?.message || "";
+
+    if (data.status === "HIGH CONCERN") {
+
+        return (
+            "The incident contains signals that require caution. " +
+            intent + " " +
+            security + " " +
+            context
+        ).trim();
+
+    }
+
+    if (data.status === "VERIFY FIRST") {
+
+        return (
+            "The incident should be independently verified before taking action. " +
+            identity + " " +
+            intent + " " +
+            context
+        ).trim();
+
+    }
+
+    return (
+        "No obvious high-risk signals were detected. " +
+        identity + " " +
+        security + " " +
+        context
+    ).trim();
+}
+
+
+function saveIncidentHistory(data) {
+
+    const history =
+        JSON.parse(
+            localStorage.getItem("cyberproofHistory")
+        ) || [];
+
+    history.unshift({
+
+        id: Date.now(),
+
+        type: "incident",
+
+        input:
+            data.input ||
+            incidentInput.value,
+
+        status:
+            data.status ||
+            "VERIFY FIRST",
+
+        action:
+            data.action ||
+            "Verify first",
+
+        context:
+            currentContext,
+
+        date:
+            new Date().toLocaleString()
+
+    });
+
+    localStorage.setItem(
+        "cyberproofHistory",
+        JSON.stringify(history.slice(0, 100))
+    );
+}
+
+
+async function checkIncident() {
+
+    const input =
+        incidentInput.value.trim();
+
+    if (!input) {
+
+        alert("Please describe the incident.");
+
+        return;
+    }
+
+    const token =
+        localStorage.getItem("cyberproofToken");
+
+    if (!token) {
+
+        alert("Please login before using Incident Check.");
+
+        window.location.href = "login.html";
+
+        return;
+    }
+
+    incidentButton.disabled = true;
+    incidentButton.textContent = "Checking...";
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+
+                    body: JSON.stringify({
+
+                        type: "incident",
+
+                        input: input,
+
+                        context: currentContext
+
+                    })
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            if (response.status === 401) {
+
+                localStorage.removeItem(
+                    "cyberproofToken"
+                );
+
+                localStorage.removeItem(
+                    "cyberproofUser"
+                );
+
+                alert(
+                    "Session expired. Please login again."
+                );
+
+                window.location.href = "login.html";
+
+                return;
+            }
+
+            throw new Error(
+                data.error ||
+                "Incident check failed."
+            );
+        }
+
+        showIncidentResult(data);
+
+        saveIncidentHistory(data);
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            error.message ||
+            "Backend connection failed."
+        );
+
+    } finally {
+
+        incidentButton.disabled = false;
+        incidentButton.textContent = "Check Incident →";
+    }
+}
+
+
+function showIncidentResult(data) {
+
+    incidentResult.classList.remove("hidden");
+    incidentResult.classList.add("show");
+
+    const status =
+        data.status ||
+        "VERIFY FIRST";
+
+    const statusElement =
+        document.getElementById("incidentStatus");
+
+    statusElement.textContent = status;
+
+    applyStatus(
+        statusElement,
+        status
+    );
+
+
+    document.getElementById(
+        "incidentChecked"
+    ).textContent =
+        data.input ||
+        incidentInput.value;
+
+
+    document.getElementById(
+        "incidentIdentity"
+    ).textContent =
+        data.evidence?.identity?.message ||
+        "Identity information unavailable.";
+
+
+    document.getElementById(
+        "incidentSecurity"
+    ).textContent =
+        data.evidence?.security?.message ||
+        "Security information unavailable.";
+
+
+    document.getElementById(
+        "incidentIntent"
+    ).textContent =
+        data.evidence?.intent?.message ||
+        "Intent information unavailable.";
+
+
+    document.getElementById(
+        "incidentContext"
+    ).textContent =
+        data.evidence?.context?.message ||
+        currentContext;
+
+
+    document.getElementById(
+        "incidentAction"
+    ).textContent =
+        data.action ||
+        "Verify first";
+
+
+    const actionDescription =
+        document.getElementById(
+            "incidentActionDescription"
+        );
+
+
+    if (status === "HIGH CONCERN") {
+
+        actionDescription.textContent =
+            "Do not interact, pay, share information or follow instructions until independently verified.";
+
+    } else if (status === "VERIFY FIRST") {
+
+        actionDescription.textContent =
+            "Verify the source and request before taking further action.";
+
+    } else {
+
+        actionDescription.textContent =
+            "No obvious high-risk signals were detected. Continue with normal caution.";
+    }
+
+
+    document.getElementById(
+        "incidentExplanation"
+    ).textContent =
+        makeExplanation(data);
+
+
+    const icons = [
+        "incidentIdentityIcon",
+        "incidentSecurityIcon",
+        "incidentIntentIcon",
+        "incidentContextIcon"
+    ];
+
+
+    icons.forEach(id => {
+
+        const icon =
+            document.getElementById(id);
+
+        if (!icon) return;
+
+        if (
+            status === "HIGH CONCERN" ||
+            status === "VERIFY FIRST"
+        ) {
+
+            icon.textContent = "⚠";
+
+        } else {
+
+            icon.textContent = "✓";
+        }
+
+    });
+
+
+    window.scrollTo({
+        top: incidentResult.offsetTop - 30,
+        behavior: "smooth"
+    });
+}
+
+
+incidentButton.addEventListener(
+    "click",
+    checkIncident
+);
+
+
+document
+    .getElementById("incidentAgain")
+    .addEventListener(
+        "click",
+        () => {
+
+            incidentInput.value = "";
+
+            incidentResult.classList.remove("show");
+
+            incidentResult.classList.add("hidden");
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+    );
+
+</script>
+<script src="nav-active.js"></script>
+</body>
+</html>

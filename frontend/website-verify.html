@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CyberProof — Website Verify</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="container nav-inner">
+
+        <a href="index.html" class="logo">
+            CyberProof
+        </a>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="scanner.html">Scanner</a>
+            <a href="website-verify.html">Website Verify</a>
+            <a href="incident.html">Incident Check</a>
+            <a href="history.html">History</a>
+            <a href="threats.html">Threat Pulse</a>
+            <a href="learn.html">Learn</a>
+            <a href="login.html" class="nav-button">Sign in</a>
+        </div>
+
+    </div>
+</nav>
+
+
+<main class="scanner-page">
+
+    <div class="container">
+
+        <div class="scanner-heading">
+
+            <span class="trust-pill">
+                WEBSITE VERIFICATION
+            </span>
+
+            <h1 style="margin-top:18px;">
+                Verify a Website
+            </h1>
+
+            <p>
+                Check a website before trusting it. Review its
+                identity, security, intent and threat intelligence.
+            </p>
+
+        </div>
+
+
+        <div class="scanner-box">
+
+            <div class="scanner-label">
+                WEBSITE URL
+            </div>
+
+            <h2>
+                Enter the website
+            </h2>
+
+            <p>
+                Paste the complete website URL you want to verify.
+            </p>
+
+            <textarea
+                id="websiteInput"
+                placeholder="Example: https://example.com"
+                autocomplete="off"></textarea>
+
+
+            <div class="context-question">
+
+                <p>
+                    Did you expect this website?
+                </p>
+
+                <div class="context-options">
+
+                    <button
+                        type="button"
+                        class="context-option active"
+                        data-context="expected">
+
+                        Yes, I expected it
+
+                    </button>
+
+                    <button
+                        type="button"
+                        class="context-option"
+                        data-context="unexpected">
+
+                        No, I didn't expect it
+
+                    </button>
+
+                    <button
+                        type="button"
+                        class="context-option"
+                        data-context="unknown">
+
+                        I'm not sure
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="verifyButton"
+                class="scan-button"
+                type="button">
+
+                Verify Website →
+
+            </button>
+
+        </div>
+
+
+        <section
+            id="verifyResult"
+            class="scanner-result hidden">
+
+            <div class="result-header">
+
+                <span>
+                    VERIFICATION RESULT
+                </span>
+
+                <h2>
+                    Website analysis complete
+                </h2>
+
+                <strong id="verifyStatus">
+                    VERIFY FIRST
+                </strong>
+
+            </div>
+
+
+            <div class="checked-input">
+
+                <small>
+                    CHECKED WEBSITE
+                </small>
+
+                <p id="verifyInput">
+                    —
+                </p>
+
+            </div>
+
+
+            <div class="evidence-grid">
+
+                <div class="evidence-item">
+
+                    <span>01</span>
+
+                    <h3>
+                        Identity
+                    </h3>
+
+                    <p id="verifyIdentity">
+                        —
+                    </p>
+
+                    <b id="verifyIdentityIcon">✓</b>
+
+                </div>
+
+
+                <div class="evidence-item">
+
+                    <span>02</span>
+
+                    <h3>
+                        Security
+                    </h3>
+
+                    <p id="verifySecurity">
+                        —
+                    </p>
+
+                    <b id="verifySecurityIcon">✓</b>
+
+                </div>
+
+
+                <div class="evidence-item">
+
+                    <span>03</span>
+
+                    <h3>
+                        Intent
+                    </h3>
+
+                    <p id="verifyIntent">
+                        —
+                    </p>
+
+                    <b id="verifyIntentIcon">⚠</b>
+
+                </div>
+
+
+                <div class="evidence-item">
+
+                    <span>04</span>
+
+                    <h3>
+                        Threat History
+                    </h3>
+
+                    <p id="verifyHistory">
+                        —
+                    </p>
+
+                    <b id="verifyHistoryIcon">✓</b>
+
+                </div>
+
+            </div>
+
+
+            <div class="recommended-action">
+
+                <small>
+                    RECOMMENDED ACTION
+                </small>
+
+                <h3 id="verifyAction">
+                    —
+                </h3>
+
+                <p id="verifyActionDescription">
+                    Review the evidence before interacting.
+                </p>
+
+            </div>
+
+
+            <div
+                class="content-card"
+                style="margin-top:20px;">
+
+                <span class="scanner-label">
+                    WHY THIS RESULT?
+                </span>
+
+                <h3 style="margin-top:12px;">
+                    Evidence-based explanation
+                </h3>
+
+                <p
+                    id="verifyExplanation"
+                    style="
+                        margin-top:10px;
+                        color:#687386;
+                    ">
+
+                    —
+
+                </p>
+
+            </div>
+
+
+            <div
+                class="hero-actions"
+                style="margin-top:20px;">
+
+                <button
+                    type="button"
+                    id="verifyAgain"
+                    class="primary-button">
+
+                    Verify Another →
+
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="container footer-inner">
+
+        <div>
+
+            <strong>
+                CyberProof
+            </strong>
+
+            <p style="margin-top:6px;">
+                Digital Trust Engine · Explainable security analysis
+            </p>
+
+        </div>
+
+        <p>
+            Analyze. Verify. Stay Safe.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+const API_URL = "http://localhost:5000/api/analyze";
+
+const verifyButton =
+    document.getElementById("verifyButton");
+
+const websiteInput =
+    document.getElementById("websiteInput");
+
+const verifyResult =
+    document.getElementById("verifyResult");
+
+let currentContext = "expected";
+
+
+document.querySelectorAll(".context-option").forEach(option => {
+
+    option.addEventListener("click", () => {
+
+        currentContext =
+            option.dataset.context;
+
+        document
+            .querySelectorAll(".context-option")
+            .forEach(item => {
+                item.classList.remove("active");
+            });
+
+        option.classList.add("active");
+    });
+
+});
+
+
+function statusClass(element, status) {
+
+    element.classList.remove(
+        "status-low",
+        "status-verify",
+        "status-high"
+    );
+
+    if (status === "LOW CONCERN") {
+        element.classList.add("status-low");
+    }
+
+    if (status === "VERIFY FIRST") {
+        element.classList.add("status-verify");
+    }
+
+    if (status === "HIGH CONCERN") {
+        element.classList.add("status-high");
+    }
+}
+
+
+function explanation(data) {
+
+    const evidence =
+        data.evidence || {};
+
+    const identity =
+        evidence.identity?.message || "";
+
+    const security =
+        evidence.security?.message || "";
+
+    const intent =
+        evidence.intent?.message || "";
+
+    const history =
+        evidence.history?.message || "";
+
+    if (data.status === "HIGH CONCERN") {
+
+        return (
+            "The website requires strong caution. " +
+            intent +
+            " " +
+            security +
+            " " +
+            history
+        ).trim();
+
+    }
+
+    if (data.status === "VERIFY FIRST") {
+
+        return (
+            "The website should be independently verified before interaction. " +
+            identity +
+            " " +
+            intent +
+            " " +
+            history
+        ).trim();
+
+    }
+
+    return (
+        "No obvious high-risk signals were detected. " +
+        identity +
+        " " +
+        security +
+        " " +
+        history
+    ).trim();
+}
+
+
+function saveHistory(data) {
+
+    const history =
+        JSON.parse(
+            localStorage.getItem("cyberproofHistory")
+        ) || [];
+
+    history.unshift({
+        id: Date.now(),
+        type: "website-verify",
+        input: data.input || websiteInput.value,
+        status: data.status || "VERIFY FIRST",
+        action: data.action || "Verify first",
+        context: currentContext,
+        date: new Date().toLocaleString()
+    });
+
+    localStorage.setItem(
+        "cyberproofHistory",
+        JSON.stringify(history.slice(0, 100))
+    );
+}
+
+
+async function verifyWebsite() {
+
+    const input =
+        websiteInput.value.trim();
+
+    if (!input) {
+
+        alert("Please enter a website URL.");
+
+        return;
+    }
+
+
+    const token =
+        localStorage.getItem("cyberproofToken");
+
+    if (!token) {
+
+        alert("Please login before using Website Verify.");
+
+        window.location.href =
+            "login.html";
+
+        return;
+    }
+
+
+    verifyButton.disabled = true;
+
+    verifyButton.textContent =
+        "Verifying...";
+
+
+    try {
+
+        const response =
+            await fetch(API_URL, {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization":
+                        `Bearer ${token}`
+                },
+
+                body: JSON.stringify({
+
+                    type: "website",
+
+                    input: input,
+
+                    context: currentContext
+
+                })
+
+            });
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            if (response.status === 401) {
+
+                localStorage.removeItem(
+                    "cyberproofToken"
+                );
+
+                localStorage.removeItem(
+                    "cyberproofUser"
+                );
+
+                alert(
+                    "Session expired. Please login again."
+                );
+
+                window.location.href =
+                    "login.html";
+
+                return;
+            }
+
+            throw new Error(
+                data.error ||
+                "Website verification failed."
+            );
+        }
+
+
+        showResult(data);
+
+        saveHistory(data);
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            error.message ||
+            "Backend connection failed."
+        );
+
+    } finally {
+
+        verifyButton.disabled = false;
+
+        verifyButton.textContent =
+            "Verify Website →";
+    }
+}
+
+
+function showResult(data) {
+
+    verifyResult.classList.remove("hidden");
+
+    verifyResult.classList.add("show");
+
+
+    const status =
+        data.status || "VERIFY FIRST";
+
+
+    const statusElement =
+        document.getElementById("verifyStatus");
+
+    statusElement.textContent =
+        status;
+
+    statusClass(
+        statusElement,
+        status
+    );
+
+
+    document.getElementById(
+        "verifyInput"
+    ).textContent =
+        data.input || websiteInput.value;
+
+
+    document.getElementById(
+        "verifyIdentity"
+    ).textContent =
+        data.evidence?.identity?.message ||
+        "Identity unavailable.";
+
+
+    document.getElementById(
+        "verifySecurity"
+    ).textContent =
+        data.evidence?.security?.message ||
+        "Security information unavailable.";
+
+
+    document.getElementById(
+        "verifyIntent"
+    ).textContent =
+        data.evidence?.intent?.message ||
+        "Intent unavailable.";
+
+
+    document.getElementById(
+        "verifyHistory"
+    ).textContent =
+        data.evidence?.history?.message ||
+        "Threat intelligence unavailable.";
+
+
+    document.getElementById(
+        "verifyAction"
+    ).textContent =
+        data.action ||
+        "Verify first";
+
+
+    const actionDescription =
+        document.getElementById(
+            "verifyActionDescription"
+        );
+
+
+    if (status === "HIGH CONCERN") {
+
+        actionDescription.textContent =
+            "Do not interact until the website has been independently verified.";
+
+    } else if (status === "VERIFY FIRST") {
+
+        actionDescription.textContent =
+            "Verify the website and organization before continuing.";
+
+    } else {
+
+        actionDescription.textContent =
+            "No obvious high-risk signals were detected. Continue with normal caution.";
+    }
+
+
+    document.getElementById(
+        "verifyExplanation"
+    ).textContent =
+        explanation(data);
+
+
+    const icons = [
+        "verifyIdentityIcon",
+        "verifySecurityIcon",
+        "verifyIntentIcon",
+        "verifyHistoryIcon"
+    ];
+
+
+    icons.forEach(id => {
+
+        const element =
+            document.getElementById(id);
+
+        if (!element) return;
+
+        if (status === "HIGH CONCERN") {
+            element.textContent = "⚠";
+        } else if (status === "VERIFY FIRST") {
+            element.textContent = "⚠";
+        } else {
+            element.textContent = "✓";
+        }
+
+    });
+
+
+    window.scrollTo({
+        top: verifyResult.offsetTop - 30,
+        behavior: "smooth"
+    });
+}
+
+
+verifyButton.addEventListener(
+    "click",
+    verifyWebsite
+);
+
+
+document
+    .getElementById("verifyAgain")
+    .addEventListener("click", () => {
+
+        websiteInput.value = "";
+
+        verifyResult.classList.remove("show");
+
+        verifyResult.classList.add("hidden");
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

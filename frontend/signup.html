@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign Up — CyberProof</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="container nav-inner">
+
+        <a href="index.html" class="logo">
+            CyberProof
+        </a>
+
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="scanner.html">Scanner</a>
+            <a href="history.html">History</a>
+            <a href="threats.html">Threat Pulse</a>
+            <a href="learn.html">Learn</a>
+            <a href="login.html">Login</a>
+        </nav>
+
+        <a href="scanner.html" class="nav-button">
+            Scan Now
+        </a>
+
+    </div>
+
+</header>
+
+<main>
+
+    <section class="section">
+
+        <div class="container">
+
+            <div style="
+                max-width:520px;
+                margin:0 auto;
+                background:white;
+                border:1px solid #ddddda;
+                border-radius:28px;
+                padding:40px;
+            ">
+
+                <div style="text-align:center;">
+
+                    <h1 style="
+                        font-size:48px;
+                        letter-spacing:-3px;
+                    ">
+                        Create account
+                    </h1>
+
+                    <p style="
+                        margin-top:12px;
+                        color:#666;
+                    ">
+                        Create your CyberProof account.
+                    </p>
+
+                </div>
+
+                <form id="signupForm" style="margin-top:30px;">
+
+                    <label style="
+                        display:block;
+                        font-size:13px;
+                        font-weight:800;
+                        margin-bottom:8px;
+                    ">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="you@example.com"
+                        required
+                        style="
+                            width:100%;
+                            padding:16px;
+                            border:1px solid #ddddda;
+                            border-radius:15px;
+                            outline:none;
+                            background:#fafaf8;
+                        "
+                    >
+
+                    <label style="
+                        display:block;
+                        font-size:13px;
+                        font-weight:800;
+                        margin-top:20px;
+                        margin-bottom:8px;
+                    ">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="At least 6 characters"
+                        required
+                        minlength="6"
+                        style="
+                            width:100%;
+                            padding:16px;
+                            border:1px solid #ddddda;
+                            border-radius:15px;
+                            outline:none;
+                            background:#fafaf8;
+                        "
+                    >
+
+                    <button
+                        type="submit"
+                        style="
+                            width:100%;
+                            margin-top:25px;
+                            padding:17px;
+                            border:none;
+                            border-radius:16px;
+                            background:#111111;
+                            color:white;
+                            font-weight:900;
+                            cursor:pointer;
+                        "
+                    >
+                        Create Account
+                    </button>
+
+                </form>
+
+                <div
+                    id="signupMessage"
+                    style="
+                        display:none;
+                        margin-top:20px;
+                        padding:15px;
+                        border-radius:14px;
+                        background:#f1f1ed;
+                        color:#333;
+                        text-align:center;
+                    "
+                ></div>
+
+                <p style="
+                    margin-top:25px;
+                    text-align:center;
+                    color:#666;
+                    font-size:13px;
+                ">
+                    Already have an account?
+                    <a
+                        href="login.html"
+                        style="font-weight:800;"
+                    >
+                        Login
+                    </a>
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer class="footer">
+
+    <div class="container footer-inner">
+
+        <div>
+            <strong>CyberProof</strong>
+
+            <p style="margin-top:6px;">
+                Evidence-based digital trust analysis.
+            </p>
+        </div>
+
+        <p>
+            Digital Trust Engine
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="signup.js"></script>
+
+</body>
+</html>
