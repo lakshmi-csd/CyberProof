@@ -1,7 +1,7 @@
 const signupForm = document.getElementById("signupForm");
 const signupMessage = document.getElementById("signupMessage");
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://cyberproof-backend.onrender.com";
 
 if (signupForm) {
     signupForm.addEventListener("submit", async function (event) {
@@ -21,7 +21,7 @@ if (signupForm) {
         }
 
         try {
-            const response = await fetch(API_URL + "/api/signup", {
+            const response = await fetch(`${API_URL}/api/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -39,8 +39,13 @@ if (signupForm) {
                 return;
             }
 
-            showMessage("Account created successfully. You can now login.");
+            showMessage("Account created successfully! Redirecting to login...");
+
             signupForm.reset();
+
+            setTimeout(function () {
+                window.location.href = "login.html";
+            }, 1200);
 
         } catch (error) {
             console.error("Signup error:", error);
@@ -50,7 +55,9 @@ if (signupForm) {
 }
 
 function showMessage(message) {
-    if (!signupMessage) return;
+    if (!signupMessage) {
+        return;
+    }
 
     signupMessage.textContent = message;
     signupMessage.style.display = "block";
