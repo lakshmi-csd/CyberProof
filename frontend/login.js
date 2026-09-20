@@ -7,11 +7,8 @@ if (loginForm) {
     loginForm.addEventListener("submit", async function (event) {
         event.preventDefault();
 
-        const emailInput = document.getElementById("email");
-        const passwordInput = document.getElementById("password");
-
-        const email = emailInput ? emailInput.value.trim() : "";
-        const password = passwordInput ? passwordInput.value : "";
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
 
         if (!email || !password) {
             showMessage("Please enter your email and password.");
@@ -21,6 +18,14 @@ if (loginForm) {
         if (password.length < 6) {
             showMessage("Password must contain at least 6 characters.");
             return;
+        }
+
+        const button = loginForm.querySelector("button[type='submit']");
+        const originalText = button ? button.textContent : "";
+
+        if (button) {
+            button.disabled = true;
+            button.textContent = "Signing in...";
         }
 
         try {
@@ -43,7 +48,7 @@ if (loginForm) {
             }
 
             if (!data.token) {
-                showMessage("Login failed: token was not received.");
+                showMessage("Login failed: token not received.");
                 return;
             }
 
@@ -58,16 +63,16 @@ if (loginForm) {
 
             showMessage("Login successful!");
 
-            setTimeout(function () {
-                window.location.href = "scanner.html";
-            }, 500);
+            window.location.href = "scanner.html";
 
         } catch (error) {
             console.error("Login error:", error);
-
-            showMessage(
-                "Backend connection failed. Please try again."
-            );
+            showMessage("Unable to connect to CyberProof server.");
+        } finally {
+            if (button) {
+                button.disabled = false;
+                button.textContent = originalText;
+            }
         }
     });
 }
