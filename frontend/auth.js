@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
             padding:12px;
             border:none;
             border-radius:12px;
-            background:#0f1d3c;
+            background:linear-gradient(145deg,#0f1d3c,#070e1f);
             color:#ffffff;
             font-weight:800;
             cursor:pointer;
