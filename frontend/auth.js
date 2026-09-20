@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
             padding:12px;
             border:none;
             border-radius:12px;
-            background:#2563eb;
+            background:#0f1d3c;
             color:#ffffff;
             font-weight:800;
             cursor:pointer;
