@@ -4,13 +4,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const navLinks = document.querySelector(".nav-links");
 
-    if (!navLinks) {
+    if (!navLinks || !token) {
         return;
     }
 
     const authButton = navLinks.querySelector(".nav-button");
 
-    if (!token) {
+    if (!authButton) {
         return;
     }
 
@@ -28,152 +28,99 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    if (authButton) {
-        authButton.textContent = "Profile";
-        authButton.href = "#";
-        authButton.id = "profileButton";
-    }
+    authButton.textContent = "Profile";
+    authButton.href = "#";
+    authButton.id = "profileButton";
 
-    const overlay = document.createElement("div");
-    overlay.id = "profileOverlay";
+    const profileBox = document.createElement("div");
 
-    overlay.style.cssText = `
-        position:fixed;
-        inset:0;
-        background:rgba(0,0,0,0.35);
-        z-index:9998;
-        display:none;
+    profileBox.id = "profileBox";
+
+    profileBox.style.cssText = `
+        position: absolute;
+        top: 78px;
+        right: 4%;
+        width: 270px;
+        background: #ffffff;
+        border: 1px solid #ddddda;
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        z-index: 9999;
+        display: none;
     `;
 
-    const sidebar = document.createElement("aside");
-    sidebar.id = "profileSidebar";
-
-    sidebar.style.cssText = `
-        position:fixed;
-        top:0;
-        right:0;
-        width:360px;
-        max-width:90%;
-        height:100vh;
-        background:#ffffff;
-        z-index:9999;
-        box-shadow:-20px 0 60px rgba(0,0,0,0.20);
-        padding:32px;
-        transform:translateX(100%);
-        transition:transform 0.25s ease;
-        display:flex;
-        flex-direction:column;
-    `;
-
-    sidebar.innerHTML = `
-        <button id="closeProfile"
-            style="
-                align-self:flex-end;
-                border:none;
-                background:none;
-                font-size:28px;
-                cursor:pointer;
-                color:#111;
-            ">
-            ×
-        </button>
-
-        <div style="margin-top:30px;">
-
-            <span style="
-                display:inline-block;
-                padding:8px 13px;
-                border-radius:999px;
-                background:#d9ff52;
-                color:#111;
-                font-size:12px;
-                font-weight:900;
-            ">
-                PROFILE
-            </span>
-
-            <h2 style="
-                margin-top:20px;
-                font-size:32px;
-                color:#111;
-            ">
-                Your Account
-            </h2>
-
-            <p style="
-                margin-top:10px;
-                color:#666;
-                word-break:break-word;
-            ">
-                ${email}
-            </p>
-
+    profileBox.innerHTML = `
+        <div style="
+            font-size:11px;
+            font-weight:900;
+            letter-spacing:1px;
+            color:#777;
+            margin-bottom:8px;
+        ">
+            PROFILE
         </div>
 
         <div style="
-            margin-top:auto;
-            padding-top:25px;
-            border-top:1px solid #ddddda;
+            font-size:18px;
+            font-weight:800;
+            color:#111;
+            margin-bottom:6px;
         ">
-
-            <button id="logoutButton"
-                style="
-                    width:100%;
-                    padding:15px;
-                    border:none;
-                    border-radius:14px;
-                    background:#111111;
-                    color:white;
-                    font-weight:900;
-                    cursor:pointer;
-                ">
-                Log out
-            </button>
-
+            Your Account
         </div>
+
+        <div style="
+            font-size:14px;
+            color:#666;
+            word-break:break-word;
+            margin-bottom:18px;
+        ">
+            ${email}
+        </div>
+
+        <button id="logoutButton" style="
+            width:100%;
+            padding:12px;
+            border:none;
+            border-radius:12px;
+            background:#111111;
+            color:#ffffff;
+            font-weight:800;
+            cursor:pointer;
+        ">
+            Log out
+        </button>
     `;
 
-    document.body.appendChild(overlay);
-    document.body.appendChild(sidebar);
+    document.body.appendChild(profileBox);
 
-    function openProfile() {
-        overlay.style.display = "block";
+    authButton.addEventListener("click", function (event) {
+        event.preventDefault();
 
-        setTimeout(function () {
-            sidebar.style.transform = "translateX(0)";
-        }, 10);
-    }
-
-    function closeProfile() {
-        sidebar.style.transform = "translateX(100%)";
-
-        setTimeout(function () {
-            overlay.style.display = "none";
-        }, 250);
-    }
-
-    if (authButton) {
-        authButton.addEventListener("click", function (event) {
-            event.preventDefault();
-            openProfile();
-        });
-    }
-
-    document.getElementById("closeProfile").addEventListener(
-        "click",
-        closeProfile
-    );
-
-    overlay.addEventListener("click", closeProfile);
+        if (profileBox.style.display === "none") {
+            profileBox.style.display = "block";
+        } else {
+            profileBox.style.display = "none";
+        }
+    });
 
     document.getElementById("logoutButton").addEventListener(
         "click",
         function () {
-
             localStorage.removeItem("cyberproofToken");
             localStorage.removeItem("cyberproofUser");
 
             window.location.href = "index.html";
         }
     );
+
+    document.addEventListener("click", function (event) {
+        if (
+            !profileBox.contains(event.target) &&
+            event.target !== authButton
+        ) {
+            profileBox.style.display = "none";
+        }
+    });
 });
