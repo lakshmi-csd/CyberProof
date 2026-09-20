@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api/analyze";
+const API_URL = "https://cyberproof-backend.onrender.com/api/analyze";
 
 const scanButton = document.getElementById("scanButton");
 const scannerInput = document.getElementById("scannerInput");
