@@ -1,7 +1,7 @@
 const loginForm = document.getElementById("loginForm");
 const loginMessage = document.getElementById("loginMessage");
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://cyberproof-backend.onrender.com";
 
 if (loginForm) {
     loginForm.addEventListener("submit", async function (event) {
@@ -47,14 +47,13 @@ if (loginForm) {
                 return;
             }
 
-            localStorage.setItem(
-                "cyberproofToken",
-                data.token
-            );
+            localStorage.setItem("cyberproofToken", data.token);
 
             localStorage.setItem(
                 "cyberproofUser",
-                data.user?.email || email
+                JSON.stringify({
+                    email: data.user?.email || email
+                })
             );
 
             showMessage("Login successful!");
@@ -67,7 +66,7 @@ if (loginForm) {
             console.error("Login error:", error);
 
             showMessage(
-                "Backend connection failed. Make sure server.js is running."
+                "Backend connection failed. Please try again."
             );
         }
     });
